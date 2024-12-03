@@ -1,24 +1,19 @@
-f = open("day2/input.txt", "r")
-lines = f.readlines() 
-list1 = [(row.split(" ")) for row in lines]
+
+list1 = [[int(i) for i in row.split()] for row in open('day2/input.txt')]
 safe =0
 for row in list1:
   isSafe=True
   inc = False
   dec = False
-  last = int(row[0])
+  last = None
   # controllo incremento o decremento
-  for i in range(1,len(row)):
-    n = int(row[i])
-    if last < n:
+  for n in row:
+    if last and last < n:
       inc = True
-    if last > n:
+    if last and last > n:
       dec = True
-    if dec and inc:
-      isSafe = False
-      break
     # fine controllo
-    if abs(n-last)>3 or abs(n-last)==0:
+    if last and abs(n-last)>3 or n==last or (dec and inc):
       isSafe = False
       break
     last = n
